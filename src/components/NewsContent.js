@@ -1,76 +1,82 @@
-import react,{Component,useEffect} from "react"
+import { useState } from "react"
 import NewsItem from "./NewsItem"
+import loading_gif from "./1495.gif"
+import { useEffect } from "react"
+import React from 'react'
 
 
-export default class NewsContent extends Component {
-    
-    constructor(){
-        super();
-        this.state={
-            articles:[],
-            pageSize:20,
-            page:1,
-            totalResults:""
-        }
-    }
+export default function NewsContent(props) {
 
-    async componentDidMount(){
-        let url=`https://newsapi.org/v2/top-headlines?country=us&apiKey=5a485da8602d4228bf1edde9d4745b6e&pageSize=${this.state.pageSize}`;
-        let data=await fetch(url);
-        let parsedData = await data.json();
-        console.log(parsedData)
-        this.setState(
-            {articles:parsedData.articles,
-            totalResults:parsedData.totalResults
-             } )
-
-    }
-    handleNextChange=async()=>{
-        if (( this.state.totalResults/this.state.pageSize)*10!=="0"){
-            let url=`https://newsapi.org/v2/top-headlines?country=us&apiKey=5a485da8602d4228bf1edde9d4745b6e&pageSize=${this.state.pageSize}&page=${this.state.page+1}`;
-            let data=await fetch(url);
+    const [pageSize, setpageSize] = useState(60)
+    const [page, setPage] = useState(1)
+    const [totalResult, settotalResult] = useState()
+    const [parsedData, setparsedData] = useState()
+    const [loading, setLoading] = useState()
+    useEffect(() => {
+        async function callBack() {
+            console.log(pageSize)
+            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=5a485da8602d4228bf1edde9d4745b6e&pageSize=${pageSize}`;
+            let data = await fetch(url);
             let parsedData = await data.json();
-            this.setState(
-                {articles:parsedData.articles,
-                totalResults:parsedData.totalResults,
-                    page:this.state.page+1
-                 } )
-        }
-    }   
-    handlePreviousChange=async()=>{
-        if (this.state.page!=1 ){
-            let url=`https://newsapi.org/v2/top-headlines?country=us&apiKey=5a485da8602d4228bf1edde9d4745b6e&pageSize=${this.state.pageSize}&page=${this.state.page-1}`;
-            let data=await fetch(url);
+            setparsedData(parsedData)
+            console.log(parsedData)
+            settotalResult(parsedData.totalResults);
+            setLoading(true);
+
+        } callBack();
+    }, [props.category]);
+
+    const handleNextChange = async () => {
+        setLoading(false);
+        if ((totalResult / pageSize) * 10 !== "0") {
+            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=5a485da8602d4228bf1edde9d4745b6e&pageSize=${pageSize}}&page=${page + 1}`;
+            let data = await fetch(url);
             let parsedData = await data.json();
-            this.setState(
-                {articles:parsedData.articles,
-                totalResults:parsedData.totalResults,
-                    page:this.state.page-1
-                 } )
+            setparsedData(parsedData)
+            settotalResult(parsedData.totalResults);
+            setLoading(true);
+            setPage(page + 1)
+
+        }
+    }
+    const handlePreviousChange = async () => {
+        setLoading(false);
+        if (page !== 1) {
+            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=5a485da8602d4228bf1edde9d4745b6e&pageSize=${pageSize}}&page=${page - 1}`;
+            let data = await fetch(url);
+            let parsedData = await data.json();
+            setparsedData(parsedData)
+            settotalResult(parsedData.totalResults);
+            setLoading(true);
+            setPage(page - 1)
+
+
         }
     }
 
-  render() {
+
     return (
-      <div className="container my-3">
-        <h2>NewsBoy -Breaking News</h2>
-        <div className="row">
-            {this.state.articles.map((element)=>{
-                return <div className="col-md-3" key={element.title}>
-                    <NewsItem  title={element.title} des={element.description} img={element.urlToImage} url={element.url}></NewsItem>
-                </div>
-            }
-            )}
-        </div>
+        <div className="container my-3">
+
+            <h2>NewsBoy -Breaking News</h2>
+            <div className="row">
+                {!loading && <img className="container d-flex justify-content" src={loading_gif} style={{ width: "150px", height: "150px" }} alt="loading" />}
+                {loading && parsedData.articles.map((element) => {
+                    return <div className="col-md-4" key={element.title}>
+                        <NewsItem title={element.title} des={element.description} img={element.urlToImage} url={element.url}></NewsItem>
+                    </div>
+                }
+                )}
+            </div>
             <div className="container d-flex justify-content-between">
 
-        <button type="button" className="btn btn-primary" disabled={this.state.page==1?true:false} onClick={this.handlePreviousChange}> &larr; Previous</button>
+                <button type="button" className="btn btn-primary" disabled={page === 1 ? true : false} onClick={handlePreviousChange}> &larr; Previous</button>
 
-        <button type="button" className="btn btn-primary "  disabled={(this.state.totalResults-(this.state.pageSize *this.state.page))<="0"?true:false} onClick={this.handleNextChange}>  &rarr; Next</button>
-      </div>
-      </div>
+                <button type="button" className="btn btn-primary " disabled={(totalResult - (pageSize * page)) <= "0" ? true : false} onClick={handleNextChange}>  &rarr; Next</button>
+            </div>
+        </div>
     )
-  }
+
 }
 
 

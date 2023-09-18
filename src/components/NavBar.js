@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router,Routes, Route, Link } from 'react-router-dom'
+
 
 export default class NavBar extends Component {
+  constructor(){
+    super();
+  }
   render() {
     return (
         <div >
@@ -13,11 +18,16 @@ export default class NavBar extends Component {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     <li className="nav-item">
-                    <a className="nav-link active" aria-current="page" href="/">Home</a>
+                    <Link className="nav-link " aria-current="page" to="/">Home</Link>
                     </li>
-                    <li className="nav-item">
-                    <a className="nav-link" href="#">Link</a>
-                    </li>
+                    <Link className="nav-link " aria-current="page" to="/bussines">Business</Link>
+                    <Link className="nav-link " aria-current="page" to="/sports">Sports</Link>
+                    <Link className="nav-link " aria-current="page" to="/technology">Techonolgy</Link>
+                    <Link className="nav-link " aria-current="page" to="/entertainment">Entertainment</Link>
+                    <Link className="nav-link " aria-current="page" to="/health">Health</Link>
+                    <Link className="nav-link " aria-current="page" to="/science">Science</Link>
+     
+                    
                 </ul>
                 <form className="d-flex" role="search">
                     <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
@@ -25,7 +35,9 @@ export default class NavBar extends Component {
                 </form>
                 </div>
             </div>
-            </nav>        
+            </nav> 
+
+            
       </div>
     )
   }
