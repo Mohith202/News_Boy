@@ -8,6 +8,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 export default class App extends Component {
   render() {
+    {document.title="NewsBoy"}
     return (
       <div>
         <Router>
