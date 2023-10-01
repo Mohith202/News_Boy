@@ -7,7 +7,7 @@ import React from 'react'
 
 export default function NewsContent(props) {
 
-    const [pageSize, setpageSize] = useState(60)
+    const [pageSize, setpageSize] = useState(20)
     const [page, setPage] = useState(1)
     const [totalResult, settotalResult] = useState()
     const [parsedData, setparsedData] = useState()
@@ -24,7 +24,7 @@ export default function NewsContent(props) {
             setLoading(true);
 
         } callBack();
-    }, [props.category]);
+    }, []);
 
     const handleNextChange = async () => {
         setLoading(false);
