@@ -1,6 +1,6 @@
 import { useState } from "react"
 import NewsItem from "./NewsItem"
-import loading_gif from "./1495.gif"
+// import loading_gif from "./1495.gif"
 import { useEffect } from "react"
 import React from 'react'
 
@@ -14,12 +14,11 @@ export default function NewsContent(props) {
     const [loading, setLoading] = useState()
     useEffect(() => {
         async function callBack() {
-            console.log(pageSize)
-            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=${API KEY}&pageSize=${pageSize}`;
+
+            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=${props.API_KEY}&pageSize=${pageSize}`;
             let data = await fetch(url);
             let parsedData = await data.json();
             setparsedData(parsedData)
-            console.log(parsedData)
             settotalResult(parsedData.totalResults);
             setLoading(true);
 
@@ -29,7 +28,7 @@ export default function NewsContent(props) {
     const handleNextChange = async () => {
         setLoading(false);
         if ((totalResult / pageSize) * 10 !== "0") {
-            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=${API KEY}&pageSize=${pageSize}}&page=${page + 1}`;
+            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=${props.API_KEY}&pageSize=${pageSize}}&page=${page + 1}`;
             let data = await fetch(url);
             let parsedData = await data.json();
             setparsedData(parsedData)
@@ -42,7 +41,7 @@ export default function NewsContent(props) {
     const handlePreviousChange = async () => {
         setLoading(false);
         if (page !== 1) {
-            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=${API KEY}&pageSize=${pageSize}}&page=${page - 1}`;
+            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=${props.API_KEY}&pageSize=${pageSize}}&page=${page - 1}`;
             let data = await fetch(url);
             let parsedData = await data.json();
             setparsedData(parsedData)
@@ -60,7 +59,7 @@ export default function NewsContent(props) {
 
             <h2>NewsBoy -Breaking News</h2>
             <div className="row">
-                {!loading && <img className="container d-flex justify-content" src={loading_gif} style={{ width: "150px", height: "150px" }} alt="loading" />}
+                {!loading && <img className="container d-flex justify-content" src="./image_folder/1495.gif" style={{ width: "150px", height: "150px" }} alt="loading" />}
                 {loading && parsedData.articles.map((element) => {
                     return <div className="col-md-4" key={element.title}>
                         <NewsItem title={element.title} des={element.description} img={element.urlToImage} url={element.url}></NewsItem>
