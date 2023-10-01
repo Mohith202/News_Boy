@@ -15,7 +15,7 @@ export default function NewsContent(props) {
     useEffect(() => {
         async function callBack() {
             console.log(pageSize)
-            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=5a485da8602d4228bf1edde9d4745b6e&pageSize=${pageSize}`;
+            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=${API KEY}&pageSize=${pageSize}`;
             let data = await fetch(url);
             let parsedData = await data.json();
             setparsedData(parsedData)
@@ -29,7 +29,7 @@ export default function NewsContent(props) {
     const handleNextChange = async () => {
         setLoading(false);
         if ((totalResult / pageSize) * 10 !== "0") {
-            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=5a485da8602d4228bf1edde9d4745b6e&pageSize=${pageSize}}&page=${page + 1}`;
+            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=${API KEY}&pageSize=${pageSize}}&page=${page + 1}`;
             let data = await fetch(url);
             let parsedData = await data.json();
             setparsedData(parsedData)
@@ -42,7 +42,7 @@ export default function NewsContent(props) {
     const handlePreviousChange = async () => {
         setLoading(false);
         if (page !== 1) {
-            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=5a485da8602d4228bf1edde9d4745b6e&pageSize=${pageSize}}&page=${page - 1}`;
+            let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=${API KEY}&pageSize=${pageSize}}&page=${page - 1}`;
             let data = await fetch(url);
             let parsedData = await data.json();
             setparsedData(parsedData)
