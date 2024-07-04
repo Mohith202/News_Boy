@@ -4,7 +4,7 @@ import {Link } from 'react-router-dom'
 
 export default function NavBar () {
 return (
-        <div >
+        <div style={{height:"50px"}} >
                     <nav  className="navbar fixed-top navbar-expand-lg bg-body-tertiary bg-dark">
             <div className="container-fluid">
                 <a className="navbar-brand" href="/home">NEWSBOY</a>

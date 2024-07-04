@@ -61,7 +61,7 @@ export default function NewsContent(props) {
 
     return (
         <div className="container my-3">
-
+            {/* <h1>{props.category}</h1> */}
             <h2>NewsBoy -Breaking News</h2>
             <div className="row">
                 {!loading && <img className="container d-flex justify-content" src={loading_gif} style={{ width: "150px", height: "150px" }} alt="loading" />}

@@ -15,7 +15,7 @@ export default function App  (props){
     return (
       <div>
         <Router>
-        <NavBar></NavBar>
+        <NavBar  ></NavBar>
           <Routes>
         <Route exact path="/home"   element={<NewsContent key="general" API_KEY={API_KEY} category="general" />}></Route>
         <Route excat  path="/bussines" element={<NewsContent key="bussines" API_KEY={API_KEY} category="business"  />}></Route>
