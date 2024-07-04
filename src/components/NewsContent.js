@@ -1,23 +1,28 @@
 import { useState } from "react"
 import NewsItem from "./NewsItem"
-// import loading_gif from "./1495.gif"
+import loading_gif from "./image_folder/1495.gif"
 import { useEffect } from "react"
 import React from 'react'
 
 
 export default function NewsContent(props) {
+    console.log(props)
 
     const [pageSize, setpageSize] = useState(20)
     const [page, setPage] = useState(1)
     const [totalResult, settotalResult] = useState()
     const [parsedData, setparsedData] = useState()
-    const [loading, setLoading] = useState()
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         async function callBack() {
 
             let url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=${props.API_KEY}&pageSize=${pageSize}`;
+            // let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=${props.API_KEY}`;
             let data = await fetch(url);
             let parsedData = await data.json();
+         
+            // let parsedData = data;
+            console.log(parsedData)
             setparsedData(parsedData)
             settotalResult(parsedData.totalResults);
             setLoading(true);
@@ -59,7 +64,7 @@ export default function NewsContent(props) {
 
             <h2>NewsBoy -Breaking News</h2>
             <div className="row">
-                {!loading && <img className="container d-flex justify-content" src="./image_folder/1495.gif" style={{ width: "150px", height: "150px" }} alt="loading" />}
+                {!loading && <img className="container d-flex justify-content" src={loading_gif} style={{ width: "150px", height: "150px" }} alt="loading" />}
                 {loading && parsedData.articles.map((element) => {
                     return <div className="col-md-4" key={element.title}>
                         <NewsItem title={element.title} des={element.description} img={element.urlToImage} url={element.url}></NewsItem>
